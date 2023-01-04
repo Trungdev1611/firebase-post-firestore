@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Login from "./Components/Login";
+import PostItem from "./Components/PostItem";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./Components/Navbar";
+import ListPost from "./Components/ListPost";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import { listRoute } from "./routes/routeList";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <Routes>
+        {listRoute.map((routeItem) => {
+          return (
+            <Route
+              key={routeItem.id}
+              path={routeItem.path}
+              element={
+                routeItem.isProtect ? (
+                  <ProtectedRoute>{routeItem.component}</ProtectedRoute>
+                ) : (
+                  routeItem.component
+                )
+              }
+            />
+          );
+        })}
+      </Routes>
+
+      <ToastContainer />
     </div>
   );
 }
