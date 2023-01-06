@@ -6,8 +6,7 @@ const ListPostWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
   grid-gap: 10px;
-  position: relative;
-  top: 80px;
+
   justify-content: center;
 `;
 const ListPost = () => {

@@ -1,3 +1,4 @@
+import CreatePost from "../Components/CreatePost";
 import ListPost from "../Components/ListPost";
 import Login from "../Components/Login";
 
@@ -10,7 +11,7 @@ export const listRoute = [
   },
   {
     path: "/createPost",
-    component: <div>Create Post</div>,
+    component: <CreatePost />,
     isProtect: false,
     id: 2,
   },

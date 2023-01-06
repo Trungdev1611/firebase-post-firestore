@@ -39,3 +39,14 @@ export function showToastError(message) {
     theme: "colored",
   });
 }
+
+export const showClassbyAction = (isFullWidth, isHide) => {
+  let classname = "createpost-wrapper";
+  if (isFullWidth) {
+    classname = classname + " fullwidth";
+  }
+  if (isHide) {
+    classname = classname + " hideaction";
+  }
+  return classname;
+};
