@@ -4,17 +4,23 @@ import { IoIosResize, IoMdClose } from "react-icons/io";
 import { BsImages, BsEmojiSmile } from "react-icons/bs";
 import styled from "styled-components";
 import { MdOutlineAttachFile } from "react-icons/md";
-import { showClassbyAction } from "../firebaseConfig/utilFireBase";
+import {
+  showClassbyAction,
+  showToastError,
+  showToastSuccess,
+} from "../firebaseConfig/utilFireBase";
 import { actionPostHeader } from "../constant";
 import { useNavigate } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { app } from "../firebaseConfig/firebaseConfig";
 const CreatePostContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -212,8 +218,23 @@ const CreatePost = () => {
     });
 
     console.log("listFile", listFilePromise);
+    //upload multi file
     let uploadFileTogetUrl = await Promise.all(listFilePromise);
     console.log("dataInfo", uploadFileTogetUrl);
+    if (uploadFileTogetUrl) {
+      showToastSuccess("Upload ảnh thành công");
+      let dataPayload = { ...dataInfo, imgLink: uploadFileTogetUrl };
+      //add data into fireStore
+      // Add a new document in collection "cities"
+      const db = getFirestore(app);
+      // Add a new document with a generated id auto
+      const newCityRef = doc(collection(db, "InfoPost"));
+
+      // later...
+      await setDoc(newCityRef, dataPayload);
+    } else {
+      showToastError("Upload thất bại");
+    }
   }
   return (
     <CreatePostContainer>
